@@ -1,0 +1,67 @@
+{
+  "programs": [
+    {
+      "id": "cc644931066a446aa695eb4ca1ed537b",
+      "name": "Color Master",
+      "path": "C:/Users/Usuario/Documents/Mis programas Python/ColorMarster/main.py",
+      "type": "py",
+      "icon": "icons/cc644931066a446aa695eb4ca1ed537b.png",
+      "color": "#55aaff",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "d3e3539aed314aeab114ad5eac317f64",
+      "name": "Icon Editor",
+      "path": "C:/Users/Usuario/Documents/Mis programas Python/icon_editor/dist/Icon Editor.exe",
+      "type": "exe",
+      "icon": "icons/d3e3539aed314aeab114ad5eac317f64.png",
+      "color": "#55aa00",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "0757ebe84b344e6eb9e1795acdaef3e3",
+      "name": "Listado de archivos",
+      "path": "C:/Users/Usuario/Documents/Mis programas Python/Listado de archivos y carpetas/exporta_estructura.py",
+      "type": "py",
+      "icon": "icons/0757ebe84b344e6eb9e1795acdaef3e3.png",
+      "color": "#c8c864",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "ea8bf9623a4f49af94e3e57c5251afe3",
+      "name": "Label Maker",
+      "path": "C:/Users/Usuario/Documents/Mis programas Python/Adhesivas/label_maker.py",
+      "type": "py",
+      "icon": "icons/ea8bf9623a4f49af94e3e57c5251afe3.png",
+      "color": "#3a3f4b",
+      "text_color": "#ffffff"
+    },
+    {
+      "id": "a6831ec6db90499ba8746e365c3ce89a",
+      "name": "Card Studio",
+      "path": "C:/Users/Usuario/Documents/Mis programas Python/Card Studio/main.py",
+      "type": "py",
+      "icon": "icons/a6831ec6db90499ba8746e365c3ce89a.png",
+      "color": "#ffffff",
+      "text_color": "#2937a2"
+    }
+  ],
+  "settings": {
+    "layout": "list",
+    "grid_icon_size": 96,
+    "list_icon_size": 45,
+    "grid_columns": 3,
+    "grid_window_w": 558,
+    "grid_window_h": 418,
+    "list_window_w": 480,
+    "list_window_h": 414,
+    "grid_font_family": "",
+    "grid_font_ratio": 0.0,
+    "grid_font_bold": false,
+    "grid_font_italic": false,
+    "list_font_family": "Segoe UI",
+    "list_font_ratio": 0.5970149253731343,
+    "list_font_bold": false,
+    "list_font_italic": false
+  }
+}
