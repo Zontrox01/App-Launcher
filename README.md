@@ -161,3 +161,8 @@ cada botón — esos los genera y cachea la app sola; para el icono del
   (multiplataforma, argumentos por programa, arrastrar para reordenar...).
 - Un único archivo (`main.py`) para mantenerlo simple; si el proyecto
   crece, se puede separar en módulos (`config.py`, `widgets.py`, etc.).
+
+## Licencia
+
+[MIT](LICENSE)
+
