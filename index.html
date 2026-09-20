@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>APP Launcher – Lanzador de aplicaciones personal con PySide6</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lanzador de aplicaciones personal hecho con Python y PySide6. Un botón por programa, totalmente configurable desde la propia app.">
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #6c2037;
+      color: #e5edf5;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #3a111e, #BA1F3A);
+      padding: 3rem 10%;
+      text-align: left;
+      color: #fdfdfd;
+    }
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2.4rem;
+    }
+    header h2 {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    header p {
+      margin-top: 1.5rem;
+      max-width: 700px;
+      font-size: 1rem;
+    }
+    .hero-image {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .header-flex {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .header-text {
+      flex: 1 1 400px;
+    }
+    .header-image {
+      flex: 0 0 320px;
+      text-align: right;
+    }
+    .header-image img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 12px;
+      border: 1px solid rgba(200, 230, 255, 0.15);
+    }
+    .hero-card {
+      flex: 1 1 260px;
+      background: rgba(5, 12, 20, 0.35);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(200, 230, 255, 0.12);
+    }
+    .hero-card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #b9e6ff;
+    }
+    .hero-card p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    main {
+      padding: 2.5rem 10% 3rem 10%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    section {
+      margin-bottom: 2.5rem;
+      background: rgba(58, 17, 30, 0.9);
+      border-radius: 12px;
+      padding: 1.8rem 1.8rem 1.6rem 1.8rem;
+      border: 1px solid rgba(180, 210, 240, 0.12);
+    }
+    section h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      border-bottom: 1px solid rgba(120, 160, 200, 0.35);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    section h3 {
+      margin-top: 1.4rem;
+      font-size: 1.1rem;
+    }
+    p {
+      margin: 0.4rem 0 0.8rem 0;
+    }
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .col {
+      flex: 1 1 260px;
+    }
+    .code-block {
+      background: #6c2037;
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      border: 1px solid rgba(120, 160, 200, 0.35);
+    }
+    .tagline {
+      font-size: 0.95rem;
+      color: #c7d9ec;
+    }
+    .badge-row {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 230, 255, 0.25);
+      color: #cfe7ff;
+      background: rgba(5, 15, 25, 0.7);
+    }
+    ul {
+      margin: 0.4rem 0 0.8rem 1.2rem;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 0.3rem;
+    }
+    .project-structure {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      background: #101205;
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(120, 160, 200, 0.35);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    footer {
+      padding: 1.5rem 10%;
+      font-size: 0.8rem;
+      color: #9fb3c9;
+      border-top: 1px solid rgba(80, 110, 140, 0.4);
+      background: #3a111e;
+    }
+    a {
+      color: #7fd3ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 800px) {
+      header, main, footer {
+        padding-left: 6%;
+        padding-right: 6%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-flex">
+    <div class="header-text">
+      <h1>APP Launcher</h1>
+      <h2>Lanzador de aplicaciones personal hecho con Python y PySide6</h2>
+
+      <p>
+        Muestra una ventana con un botón por cada programa que registres; cada botón arranca ese
+        programa (<code>.exe</code> o <code>.py</code> sin necesidad de compilar). Todo es
+        configurable desde la propia app: añadir, quitar, reordenar y cambiar el color de cada
+        botón.
+      </p>
+      <p>
+        Pensado para Windows, con extracción automática de icono, vistas de cuadrícula y lista,
+        control de tamaño independiente por vista, y persistencia en <code>config.json</code>.
+      </p>
+    </div>
+
+    <div class="header-image">
+      <!-- Si tienes una imagen del launcher, sustitúyela aquí -->
+      <img src="https://github.com/Zontrox01/App-Launcher/blob/main/icons/app_launcher.png?raw=true"
+           alt="APP Launcher – Lanzador de aplicaciones personal">
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-card">
+      <h3>Añadir y ejecutar</h3>
+      <p>
+        Pulsa «+ Añadir programa», elige un <code>.exe</code> o <code>.py</code> del disco y
+        confirma (o edita) el nombre que verá el botón. El icono se extrae automáticamente del
+        archivo. Clic normal para ejecutar.
+      </p>
+    </div>
+    <div class="hero-card">
+      <h3>Personalización total</h3>
+      <p>
+        Clic derecho sobre un botón para ver y copiar la ruta, cambiar texto, color de fondo y
+        color de letra por botón, cambiar la fuente de todos los botones, reordenar y quitar.
+      </p>
+    </div>
+    <div class="hero-card">
+      <h3>Dos vistas y tamaño independiente</h3>
+      <p>
+        Cambia entre vista de <strong>Cuadrícula</strong> y vista de <strong>Lista</strong>. Cada
+        una recuerda su propio tamaño de icono y de ventana por separado.
+      </p>
+    </div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge">PySide6</span>
+    <span class="badge">Windows</span>
+    <span class="badge">Python 3.10+</span>
+    <span class="badge">config.json</span>
+    <span class="badge">PyInstaller</span>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2>Qué es APP Launcher</h2>
+    <p class="tagline">
+      Un lanzador de aplicaciones personal, simple y totalmente configurable desde la propia
+      interfaz, sin tocar código ni archivos de configuración a mano.
+    </p>
+    <p>
+      APP Launcher está hecho con <strong>Python</strong> y <strong>PySide6</strong>. Muestra una
+      ventana con un botón por cada programa que registres; cada botón arranca ese programa, ya sea
+      un <code>.exe</code> o un <code>.py</code>, sin necesidad de compilar nada. Todo se gestiona
+      desde la app: añadir, quitar, reordenar y cambiar el color de cada botón.
+    </p>
+    <p>
+      El proyecto está pensado para Windows (la extracción automática de icono usa el shell de
+      Windows) y mantiene un único archivo <code>main.py</code> para conservarlo simple. Si el
+      proyecto crece, se puede separar en módulos (<code>config.py</code>, <code>widgets.py</code>,
+      etc.).
+    </p>
+  </section>
+
+  <section>
+    <h2>Requisitos e instalación</h2>
+
+    <h3>Requisitos</h3>
+    <ul>
+      <li>Windows (la extracción automática de icono usa el shell de Windows).</li>
+      <li>Python 3.10+</li>
+      <li>Dependencias en <code>requirements.txt</code></li>
+    </ul>
+
+    <h3>Instalación</h3>
+    <div class="code-block">
+      pip install -r requirements.txt
+    </div>
+
+    <h3>Uso</h3>
+    <div class="code-block">
+      python main.py
+    </div>
+  </section>
+
+  <section>
+    <h2>Características principales</h2>
+    <div class="columns">
+      <div class="col">
+        <h3>Añadir y ejecutar programas</h3>
+        <ul>
+          <li><strong>Añadir programa</strong>: pulsa «+ Añadir programa», elige un <code>.exe</code> o <code>.py</code> del disco y confirma (o edita) el nombre que verá el botón.</li>
+          <li>El icono se extrae automáticamente del archivo.</li>
+          <li><strong>Ejecutar</strong>: clic normal en el botón.</li>
+        </ul>
+
+        <h3>Clic derecho sobre un botón</h3>
+        <ul>
+          <li>Ver la ruta del archivo asociado (se muestra arriba del menú) y copiarla.</li>
+          <li>Ejecutar.</li>
+          <li>Cambiar texto del botón... — por botón.</li>
+          <li>Cambiar color de fondo (paleta de Windows) — por botón.</li>
+          <li>Cambiar color de letra (paleta de Windows) — por botón.</li>
+          <li>Fuente del texto (todos los botones)... — familia, tamaño, negrita, cursiva.</li>
+          <li>Mover antes / Mover después (reordenar).</li>
+          <li>Columnas de la cuadrícula... (solo en vista de cuadrícula).</li>
+          <li>Quitar.</li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3>Vistas y tamaño</h3>
+        <ul>
+          <li><strong>Cuadrícula</strong>: formato original, icono encima, texto debajo, en rejilla.</li>
+          <li><strong>Lista</strong>: botones tipo barra, uno debajo de otro, con el icono a la izquierda del texto.</li>
+          <li><strong>Tamaño</strong>: el deslizador de al lado ajusta el tamaño del icono/botón. Cada vista recuerda su propio tamaño por separado.</li>
+          <li><strong>Tamaño de la ventana</strong>: se recuerda por separado para cada vista; se restaura al volver a abrir la app o al cambiar de vista.</li>
+        </ul>
+
+        <h3>Icono realmente redimensionado</h3>
+        <p>
+          Al añadir un programa, su icono se cachea ya normalizado a un cuadrado fijo (estirándolo
+          en un único paso, no centrándolo dentro de un cuadro de relleno). Al mostrarlo en un
+          botón, ese icono se vuelve a redimensionar igual de directo, al tamaño exacto elegido con
+          el deslizador. Se usa <code>QPixmap.scaled()</code> en vez de <code>QIcon.pixmap()</code>,
+          así que un icono de un <code>.exe</code> de baja resolución se ve igual de grande que uno
+          de un <code>icono.png</code> en alta resolución.
+        </p>
+      </div>
+
+      <div class="col">
+        <h3>Tamaño de letra y estilo de texto</h3>
+        <ul>
+          <li>Por defecto, el tamaño de letra escala junto con el deslizador de tamaño de icono.</li>
+          <li><strong>Fuente del texto (todos los botones)...</strong> abre el selector de fuente para fijar familia, tamaño, negrita y cursiva. Se aplica a todos los botones de la vista actual.</li>
+          <li><strong>Cambiar color de letra</strong> abre la paleta de color estándar de Windows para el color del texto de ese botón en concreto.</li>
+          <li>El tamaño de botón lo decide solo el icono; el texto se pega casi al borde superior e inferior del botón.</li>
+          <li>Si fijas un tamaño de letra a mano, se guarda como proporción respecto al tamaño de icono del momento, así que si luego mueves el deslizador, la letra escala en la misma proporción.</li>
+          <li>Se guarda por vista en <code>config.json</code>.</li>
+        </ul>
+
+        <h3>Columnas de la cuadrícula</h3>
+        <p>
+          Desde el clic derecho de cualquier botón, con la vista de Cuadrícula activa →
+          <strong>Columnas de la cuadrícula...</strong>, puedes fijar cuántas columnas tiene la
+          rejilla (por ejemplo, 3 columnas para que con 12 programas salgan 4 filas). Se guarda en
+          <code>config.json</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Iconos y lanzamiento de programas</h2>
+
+    <h3>Icono de los <code>.py</code></h3>
+    <p>
+      Para un script <code>.py</code>, si en su misma carpeta existe un archivo
+      <code>icono.png</code>, se usa como icono del botón. Si no existe, se usa el icono por
+      defecto (el de Python) sin avisar.
+    </p>
+
+    <h3>Icono de la ventana (barra de título / barra de tareas)</h3>
+    <p>
+      Deja un archivo llamado <code>app_icon.ico</code>, <code>app_icon.png</code>,
+      <code>icono.ico</code> o <code>icono.png</code> (el primero que encuentre, en ese orden)
+      junto a <code>main.py</code> —o junto al <code>.exe</code> si está compilado— y la app lo usa
+      automáticamente como icono de la ventana y de la barra de tareas. Si no hay ninguno, usa el
+      icono por defecto de Qt sin dar error. Para el <code>.exe</code> compilado, usa ese mismo
+      archivo también en <code>--icon</code> de PyInstaller para que el icono del ejecutable y el
+      de la ventana coincidan.
+    </p>
+
+    <h3>Cómo se lanzan los programas</h3>
+    <ul>
+      <li><code>.exe</code> → se ejecuta directamente, con la carpeta que lo contiene como directorio de trabajo.</li>
+      <li><code>.py</code> → se ejecuta como <code>python nombre.py</code> (si <code>python</code> no está en el PATH, se usa como respaldo el mismo intérprete con el que corre el lanzador), también desde la carpeta que contiene el script. Por eso, de momento, un script <code>.py</code> debe poder ejecutarse él solo desde su propia carpeta de proyecto (sin argumentos ni configuración adicional).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Persistencia y compilación</h2>
+
+    <h3>Persistencia</h3>
+    <p>
+      La lista de programas se guarda en <code>config.json</code> (se crea automáticamente al añadir
+      el primer programa) y los iconos cacheados en <code>icons/</code>. Ambos se generan junto al
+      ejecutable real (junto a <code>main.py</code> en desarrollo, o junto al <code>.exe</code> si
+      está compilado); no hace falta tocarlos a mano.
+    </p>
+
+    <h3>Compilar con PyInstaller</h3>
+    <p>
+      <code>config.json</code> e <code>icons/</code> se crean solos junto al <code>.exe</code> —
+      <strong>no los metas con <code>--add-data</code></strong>. En modo <code>--onefile</code>,
+      <code>--add-data</code> los copia dentro del propio ejecutable, y en tiempo de ejecución
+      PyInstaller los extrae a una carpeta temporal (<code>_MEIPASS</code>) que borra al cerrar la
+      app; el programa nunca llegaría a ver ni guardar nada ahí, ni aunque los copies a mano junto
+      al <code>.exe</code> (la app seguiría mirando la carpeta temporal, no esa).
+    </p>
+    <div class="code-block">
+      python -m PyInstaller --onefile --windowed --icon=icons\icono.ico --name=MiApp --collect-all PySide6 main.py
+    </div>
+    <p>
+      (el icono del propio <code>.exe</code>, vía <code>--icon</code>, es aparte de los iconos de
+      cada botón — esos los genera y cachea la app sola; para el icono del <code>.exe</code>,
+      Windows funciona mejor con un <code>.ico</code> que con un <code>.png</code>).
+    </p>
+  </section>
+
+  <section>
+    <h2>Arquitectura y notas de diseño</h2>
+    <p>
+      APP Launcher mantiene un único archivo (<code>main.py</code>) para conservarlo simple. Si el
+      proyecto crece, se puede separar en módulos (<code>config.py</code>, <code>widgets.py</code>,
+      etc.).
+    </p>
+    <div class="project-structure">
+Componentes principales
+├── main.py                    # Punto de entrada y toda la lógica del lanzador
+├── requirements.txt           # Dependencias (PySide6, etc.)
+├── config.json                # Lista de programas, colores, fuentes, columnas, tamaños (autogenerado)
+├── icons/                     # Iconos cacheados de cada programa (autogenerado)
+├── app_icon.ico / icono.png   # Icono opcional de la ventana y de la barra de tareas
+└── icono.png                  # Icono opcional para scripts .py en su propia carpeta
+    </div>
+    <p>
+      Pensado para Windows por ahora; ver <code>FILES.md</code> para posibles ampliaciones
+      (multiplataforma, argumentos por programa, arrastrar para reordenar...).
+    </p>
+  </section>
+
+  <section>
+    <h2>Documentación y créditos</h2>
+
+    <h3>Documentación</h3>
+    <ul>
+      <li><strong>README.md</strong> — descripción general, instalación y uso.</li>
+      <li><strong>FILES.md</strong> — inventario completo de scripts y módulos, con estado de auditoría y posibles ampliaciones.</li>
+      <li><strong>LICENSE</strong> — licencia del código.</li>
+    </ul>
+
+    <h3>Licencia</h3>
+    <p>
+      Consulta el archivo <code>LICENSE</code> del repositorio para conocer los términos exactos
+      bajo los que se distribuye este software.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    APP Launcher — Lanzador de aplicaciones personal hecho con Python y PySide6.<br>
+    Documentación completa: <code>README.md</code> · <code>FILES.md</code>.<br>
+    Repositorio del proyecto:
+    <a href="https://github.com/Zontrox01/Color_Master" target="_blank">
+      APP Launcher en GitHub
+    </a>
+  </p>
+</footer>
+</body>
+</html>
