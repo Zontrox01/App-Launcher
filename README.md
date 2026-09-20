@@ -7,7 +7,7 @@ y cambiar el color de cada botón.
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![PySide6](https://img.shields.io/badge/UI-PySide6%20(Qt6)-green)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
 ---
